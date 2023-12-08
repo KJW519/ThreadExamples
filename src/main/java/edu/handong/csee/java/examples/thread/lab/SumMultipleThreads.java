@@ -26,10 +26,19 @@ public class SumMultipleThreads {
 			sumRunners.add(currentRunner);
 			
 			Thread thread = new Thread(currentRunner);
-			thread.start();
 			threadsForSubSum.add(thread);
 			System.out.println("Thread-" + i + " started!");
+			
 		}
+		
+	       for (Thread thread : threadsForSubSum) {
+	            try {
+	                thread.start();
+	                thread.join(); 
+	            } catch (IllegalThreadStateException | InterruptedException e) {
+	                e.printStackTrace();
+	            }
+	        }
 
 		long grandTotal = 0;
 		for(SumRunner runner:sumRunners) {
